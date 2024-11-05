@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField] GameObject musicPlayer;
     public void StartGame(){
+        DontDestroyOnLoad(musicPlayer);
         SceneManager.LoadScene("Level1");
     }
 

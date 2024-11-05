@@ -33,8 +33,8 @@ public class EnemyAI : MonoBehaviour
     void IdleState(){
 
         soldier.Move(Vector3.zero.normalized);
-
-        if (stateTime >= idleTime)
+        
+        if (stateTime >= idleTime && !LevelManager.singleton.GetGameOverStatus())
         {
             direction *= -1;
             ChangeState(PatrolState);
@@ -50,6 +50,10 @@ public class EnemyAI : MonoBehaviour
         {
             ChangeState(IdleState);
             return;
+        }
+
+        if (LevelManager.singleton.GetGameOverStatus()){
+            ChangeState(IdleState);
         }
     }
 

@@ -102,8 +102,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd47d33b66144e8f9f1045ea1f63fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 200
   isHidden: 0
+  isDead: 0
+  hasWon: 0
   walk: Walk
   idle: Idle
   idleHidden: IdleHidden
@@ -112,9 +114,11 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5656622583916842236}
   animationStateChanger: {fileID: 1604984062119495254}
   rigidBody: {fileID: 4409196824500306256}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  audioSources:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!50 &4409196824500306256
 Rigidbody2D:
   serializedVersion: 4

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.ShortcutManagement;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -22,6 +21,7 @@ public class LevelManager : MonoBehaviour
     [Header("Helpers")]
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] GameObject levelCompletePanel;
+    bool isGameOver = false;
 
     void Awake(){
         gameOverPanel.SetActive(false);
@@ -45,7 +45,12 @@ public class LevelManager : MonoBehaviour
         } else {
             LevelComplete();
         }
+        isGameOver = true;
         yield return null;
+    }
+
+    public bool GetGameOverStatus(){
+        return isGameOver;
     }
 
     public void GameOver(){
@@ -67,6 +72,7 @@ public class LevelManager : MonoBehaviour
     public void LoadNextLevel(){
         SceneManager.LoadScene(nextScene);
     }
+
 
 }
 

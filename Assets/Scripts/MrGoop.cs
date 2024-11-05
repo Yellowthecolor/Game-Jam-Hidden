@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TreeEditor;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,8 +26,7 @@ public class MrGoop : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] AnimationStateChanger animationStateChanger;
     [SerializeField] Rigidbody2D rigidBody;
-    [SerializeField] LayerMask enemyLayer;
-    [SerializeField] LayerMask endGoal;
+    [SerializeField] List<AudioSource> audioSources; //0 = win, 1 = hide, 2 = death, 3 = help
 
     void Start()
     {
@@ -72,14 +69,17 @@ public class MrGoop : MonoBehaviour
         } else {
             animationStateChanger.TriggerAnimation(hide);
         }
+        audioSources[1].Play();
         isHidden = !isHidden;
     }
     
     void OnTriggerStay2D(Collider2D other)
     {
         if(other.CompareTag("Soldier") && !CheckDeathStatus() && !CheckIsHidden()){
-            animationStateChanger.TriggerAnimation(hide);
+            animationStateChanger.TriggerAnimation(idleHidden);
             isDead = true;
+            audioSources[2].Play();
+            audioSources[3].Play();
         }
     }
     
@@ -87,12 +87,16 @@ public class MrGoop : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if(other.CompareTag("EndGoal")){
+            animationStateChanger.TriggerAnimation(idleHidden);
             hasWon = true;
+            audioSources[0].Play();
         }
 
         if(other.CompareTag("Soldier") && !CheckDeathStatus() && !CheckIsHidden()){
-            animationStateChanger.TriggerAnimation(hide);
+            animationStateChanger.TriggerAnimation(idleHidden);
             isDead = true;
+            audioSources[2].Play();
+            audioSources[3].Play();
         }
 
 

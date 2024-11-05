@@ -17,7 +17,9 @@ public class MuricanSoldier : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] AnimationStateChanger animationStateChanger;
     [SerializeField] Rigidbody2D rigidBody;
-    [SerializeField] LayerMask enemyLayer;
+    [SerializeField] List<AudioSource> walkAudioSources;
+    int currentAudio = 0;
+
 
     void Start()
     {
@@ -42,9 +44,21 @@ public class MuricanSoldier : MonoBehaviour
         if (movement != Vector3.zero){
             currentAnimationState = walk;
             animationStateChanger.TriggerAnimation(walk);
+            if(!walkAudioSources[currentAudio].isPlaying){
+                walkAudioSources[currentAudio].Play();
+                currentAudio++;
+            }
+            if (currentAudio >= walkAudioSources.Count){
+                currentAudio = 0;
+            }
         } else {
             currentAnimationState = idle;
             animationStateChanger.TriggerAnimation(idle);
+            foreach (AudioSource source in walkAudioSources)
+            {
+                walkAudioSources[currentAudio].Stop();
+            }
+            
         }
 
     }
