@@ -12,6 +12,8 @@ public class MrGoop : MonoBehaviour
     [Header("Stats")]
     [SerializeField] float speed = 50;
     [SerializeField] bool isHidden = false;
+    [SerializeField] bool isDead = false;
+    [SerializeField] bool hasWon = false;
     Vector3 movement = Vector3.zero;
     
     [Header("Animation State")]
@@ -20,13 +22,14 @@ public class MrGoop : MonoBehaviour
     [SerializeField] string idleHidden = "IdleHidden";
     [SerializeField] string hide = "Hide";
     [SerializeField] string unHide = "UnHide";
-    String currentAnimationState = "Idle";
+    string currentAnimationState = "Idle";
 
     [Header("Helpers")]
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] AnimationStateChanger animationStateChanger;
     [SerializeField] Rigidbody2D rigidBody;
     [SerializeField] LayerMask enemyLayer;
+    [SerializeField] LayerMask endGoal;
 
     void Start()
     {
@@ -61,11 +64,6 @@ public class MrGoop : MonoBehaviour
             currentAnimationState = idleHidden;
             animationStateChanger.TriggerAnimation(idleHidden);
         }
-
-    }
-
-    public bool CheckIsHidden(){
-        return isHidden;
     }
 
     public void ToggleHide(){
@@ -75,5 +73,42 @@ public class MrGoop : MonoBehaviour
             animationStateChanger.TriggerAnimation(hide);
         }
         isHidden = !isHidden;
+    }
+    
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if(other.CompareTag("Soldier") && !CheckDeathStatus() && !CheckIsHidden()){
+            animationStateChanger.TriggerAnimation(hide);
+            isDead = true;
+        }
+    }
+    
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("EndGoal")){
+            hasWon = true;
+        }
+
+        if(other.CompareTag("Soldier") && !CheckDeathStatus() && !CheckIsHidden()){
+            animationStateChanger.TriggerAnimation(hide);
+            isDead = true;
+        }
+
+
+    }
+
+
+    public bool CheckIsHidden(){
+        return isHidden;
+    }
+
+
+    public bool CheckDeathStatus(){
+        return isDead;
+    }
+
+    public bool CheckWinStatus(){
+        return hasWon;
     }
 }

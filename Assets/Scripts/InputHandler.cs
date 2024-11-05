@@ -11,11 +11,16 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 movement;
+        if (goop.CheckDeathStatus() || goop.CheckWinStatus()){
+            movement = Vector3.zero;
+            goop.Move(movement);
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.Space)){
             goop.ToggleHide();
         }
         
-        Vector3 movement;
         if (goop.CheckIsHidden()){
             movement = Vector3.zero;
         } else {

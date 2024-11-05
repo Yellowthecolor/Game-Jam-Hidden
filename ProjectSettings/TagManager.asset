@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Soldier
+  - EndGoal
   layers:
   - Default
   - TransparentFX
@@ -11,9 +13,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Soldiers
+  - Player
+  - Walls
   - 
   - 
   - 
@@ -44,12 +46,12 @@ TagManager:
   - name: Floors
     uniqueID: 80471855
     locked: 0
-  - name: Soldiers
+  - name: Creatures
     uniqueID: 3815824679
-    locked: 0
-  - name: Player
-    uniqueID: 3742376921
     locked: 0
   - name: Top
     uniqueID: 198912475
+    locked: 0
+  - name: UI
+    uniqueID: 1591857055
     locked: 0
